@@ -5,11 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 
-public class Figure extends JButton implements ActionListener { //MouseListener
+public class Figure extends JButton implements ActionListener {
 	private int posX;
 	private int posY;
 	private final int solutionPosX;
@@ -30,9 +29,7 @@ public class Figure extends JButton implements ActionListener { //MouseListener
 		this.setIcon(figure);
 		this.setPreferredSize(new Dimension(figure.getIconWidth(), figure.getIconHeight()));
 		this.addActionListener(this);
-		//this.addMouseListener(this);
 
-		//added this, removed interface
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -41,6 +38,9 @@ public class Figure extends JButton implements ActionListener { //MouseListener
 					BufferedImage bf = ImageResizer.rotate((BufferedImage) getImage().getImage(), degrees);
 					Board.board[posX][posY].getFigure().setIcon(new ImageIcon(bf));
 					Puzzle.getBoard().remover();
+					long l = Solution.check((BufferedImage) getImage().getImage(),
+						(BufferedImage) Board.board[posX + 1][posY].getFigure().getImage().getImage());
+
 					CheckAnswer();
 				}
 			}
@@ -85,37 +85,7 @@ public class Figure extends JButton implements ActionListener { //MouseListener
 		Move();
 	}
 
-	/*@Override
-	public void mouseReleased(MouseEvent e) {
 
-	}
-
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if(SwingUtilities.isRightMouseButton(e)&&this.isEnabled()) {
-			this.degrees = (this.degrees + 90) % 360;
-			BufferedImage bf = ImageResizer.rotate((BufferedImage) this.getImage().getImage(), this.degrees);
-			Board.board[posX][posY].getFigure().setIcon(new ImageIcon(bf));
-			Puzzle.getBoard().remover();
-			CheckAnswer();
-		}
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		//System.out.println("pressed");
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		//System.out.println("entered");
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		//System.out.println("exit");
-	}*/
 
 	private void Move() {
 		Cell[][] board = Board.board;
