@@ -34,6 +34,28 @@ public class Board extends JPanel{
 			y += figHeight;
 		}
 		System.out.println("Made puzzle for solving ");
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		for (BufferedImage b : compBoard) {
+			System.out.println(b);
+		}
+
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+
+		Random rnd = new Random();
+		for (int i = compBoard.length - 1; i > 0; i--)
+		{
+			int index = rnd.nextInt(i + 1);
+			BufferedImage a = compBoard[index];
+			compBoard[index] = compBoard[i];
+			compBoard[i] = a;
+		}
+
+		for (BufferedImage b : compBoard) {
+			System.out.println(b);
+		}
+
+
 		return compBoard;
 
 	}
