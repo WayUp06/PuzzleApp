@@ -86,17 +86,11 @@ public class Puzzle extends JFrame {
 
                 if (button.getName().equals("retry") && board != null) {
                     board.messBoard();
-					
-				/*}else if(button.getName().equals("new")){
-					new StartPuzzle();
-				} else if (button.getName().equals("solve")){
-					Solution.solve(Board.getPuzzleForSol());
-				}*/
+
                 } else if (button.getName().equals("new")) {
 
                     sp = new StartPuzzle();
                 } else if (button.getName().equals("solve")) {
-                    System.out.println("button");
                    BufferedImage b =  Solution.solve(Board.getPuzzleForSol(sp.getDimension(), ImageResizer.resizeImage(sp.getImage(), 400, 400)));
                     if (board != null) {
                         container.remove(board);
@@ -108,8 +102,6 @@ public class Puzzle extends JFrame {
                     container.add(puzzleArea, BorderLayout.WEST);
                     container.validate();
 
-
-                   //container.add(b, BorderLayout.SOUTH);
                 }
 
             }
