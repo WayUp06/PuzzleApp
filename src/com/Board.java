@@ -8,17 +8,41 @@ import javax.swing.*;
 
 public class Board extends JPanel{
 
-	public static Cell[][] board;
+	public static Figure[][] board;
 	
-	private ArrayList<Cell> completeBoard = new ArrayList<>();
+	private ArrayList<Figure> completeBoard = new ArrayList<>();
 	public final int dimension;
 	private final int figureWidth, figureHeight;
+
+
+
+	public static BufferedImage[] getPuzzleForSol(int dimension, BufferedImage puzzle){
+		int x = 0;
+		int y = 0;
+		int figWidth = puzzle.getWidth()/dimension;
+		int figHeight = puzzle.getHeight()/dimension;
+		int count = dimension*dimension;
+		BufferedImage [] compBoard = new BufferedImage[count];
+
+		for(int i=0; i<dimension; i++){
+			for(int j=0; j<dimension; j++){
+				compBoard[i*dimension + j] = puzzle.getSubimage(x, y, figWidth, figHeight);
+				x += figWidth;
+				System.out.println("Subimage !!!!!!!!!!!!!!!!!!!!!");
+			}
+			x = 0;
+			y += figHeight;
+		}
+		System.out.println("Made puzzle for solving ");
+		return compBoard;
+
+	}
 
 	public Board(int dimension, BufferedImage puzzle){
 		this.setPreferredSize(new Dimension(410, 0));
 		this.setBackground(Color.BLACK);
 		this.dimension = dimension;
-		board = new Cell[dimension][dimension];
+		board = new Figure[dimension][dimension];
 		int x = 0;
 		int y = 0;
 		figureWidth = puzzle.getWidth()/dimension;
@@ -31,7 +55,7 @@ public class Board extends JPanel{
 				if(i == dimension - 1 && j == dimension -1){			
 					continue;
 				}
-				completeBoard.add(new Cell(i, j, new Figure(i, j, new ImageIcon(puzzle.getSubimage(x, y, figureWidth, figureHeight)), dimension)));
+				completeBoard.add( new Figure(i, j, new ImageIcon(puzzle.getSubimage(x, y, figureWidth, figureHeight)), dimension));
 				//completeBoard.add(new Cell(i, j, new Figure(i, j, new ImageIcon(ImageResizer.rotate( puzzle.getSubimage(x, y, figureWidth, figureHeight), 90)), dimension)));
 				x += figureWidth;
 			}
@@ -46,24 +70,24 @@ public class Board extends JPanel{
 	public void messBoard(){
 		
 		Random  random= new Random();
-		ArrayList<Cell> cellStore = new ArrayList<>(completeBoard);
+		ArrayList<Figure> cellStore = new ArrayList<>(completeBoard);
 		
 		for(int i = 0; i<dimension; i++){
 			for(int j = 0; j<dimension; j++){
 				if(i == dimension-1 && j == dimension-1){
-					board[i][j] = new Cell(i, j);
+					board[i][j] = new Figure(i, j);
 					continue;
 				}
 				int randomDegree = random.nextInt(4) * 90;
 				int randomIndex = random.nextInt(completeBoard.size());
 
-				Figure figure = completeBoard.get(randomIndex).getFigure();
+				Figure figure = completeBoard.get(randomIndex);
 				figure.setPos(i,j);
 				figure.setDegrees(randomDegree);
 				BufferedImage bf = ImageResizer.rotate((BufferedImage) figure.getImage().getImage(), figure.getDegrees());
 				figure.setIcon(new ImageIcon(bf));
 
-				board[i][j] = new Cell(i, j, figure);
+				board[i][j] = figure;
 				completeBoard.remove(randomIndex);
 
 			}
@@ -75,13 +99,13 @@ public class Board extends JPanel{
 		
 		for(int i = 0; i<dimension; i++){
 			for(int j = 0; j<dimension; j++){	
-				if(board[i][j].getFigure() == null){
+				if(board[i][j].getImage() == null){
 					JLabel label = new JLabel();
 					label.setPreferredSize(new Dimension(figureWidth, figureHeight));
 					this.add(label);
 					continue;
 				}
-				this.add(board[i][j].getFigure());
+				this.add(board[i][j]);
 			}
 		}
 		Puzzle.getContainer().validate();

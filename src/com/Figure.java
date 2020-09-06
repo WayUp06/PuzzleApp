@@ -16,18 +16,23 @@ public class Figure extends JButton implements ActionListener {
 	private int dimension;
 	private ImageIcon icon;
 	private int degrees;
+
+	public Figure(int solutionPosX, int solutionPosY){
+		this.solutionPosX = solutionPosX;
+		this.solutionPosY = solutionPosY;
+	}
+
 	
-	public Figure(int solPosX, int solPosY, ImageIcon figure, int dimension){
+	public Figure(int solPosX, int solPosY, ImageIcon icon, int dimension){
 		this.dimension = dimension;
 		this.solutionPosX = solPosX;
 		this.solutionPosY = solPosY;
 		this.posX = solPosX;
 		this.posY = solPosY;
-
-		this.icon = figure;
+		this.icon = icon;
 		
-		this.setIcon(figure);
-		this.setPreferredSize(new Dimension(figure.getIconWidth(), figure.getIconHeight()));
+		this.setIcon(icon);
+		this.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
 		this.addActionListener(this);
 
 		this.addMouseListener(new MouseAdapter() {
@@ -36,10 +41,10 @@ public class Figure extends JButton implements ActionListener {
 				if(SwingUtilities.isRightMouseButton(e)&&isEnabled()) {
 					degrees = (degrees + 90) % 360;
 					BufferedImage bf = ImageResizer.rotate((BufferedImage) getImage().getImage(), degrees);
-					Board.board[posX][posY].getFigure().setIcon(new ImageIcon(bf));
+					Board.board[posX][posY].setIcon(new ImageIcon(bf));
 					Puzzle.getBoard().remover();
 					long l = Solution.check((BufferedImage) getImage().getImage(),
-						(BufferedImage) Board.board[posX + 1][posY].getFigure().getImage().getImage());
+						(BufferedImage) Board.board[posX + 1][posY].getImage().getImage());
 
 					CheckAnswer();
 				}
@@ -60,8 +65,6 @@ public class Figure extends JButton implements ActionListener {
 	public void setDegrees(int degrees) {
 		this.degrees = degrees;
 	}
-
-
 
 	public ImageIcon getImage() {return icon;}
 
@@ -88,32 +91,32 @@ public class Figure extends JButton implements ActionListener {
 
 
 	private void Move() {
-		Cell[][] board = Board.board;
+		Figure[][] board = Board.board;
 
-			if (posY+1 < dimension && board[posX][posY + 1].getFigure() == null) {
-				Board.board[posX][posY + 1].setFigure(this);
-				Board.board[posX][posY].setFigure(null);
+			if (posY+1 < dimension && board[posX][posY + 1].getImage() == null) {
+				Board.board[posX][posY + 1] = this;
+				Board.board[posX][posY] = new Figure(-1, -1);
 				posY++;
 				Puzzle.getBoard().remover();
 				CheckAnswer();
 
-			} else if (posX + 1 < dimension && board[posX + 1][posY].getFigure() == null) {
-				Board.board[posX + 1][posY].setFigure(this);
-				Board.board[posX][posY].setFigure(null);
+			} else if (posX + 1 < dimension && board[posX + 1][posY].getImage() == null) {
+				Board.board[posX + 1][posY] = this;
+				Board.board[posX][posY] = new Figure(-1, -1);
 				posX++;
 				Puzzle.getBoard().remover();
 				CheckAnswer();
 
-			} else if (posX > 0 && board[posX - 1][posY].getFigure() == null) {
-				Board.board[posX - 1][posY].setFigure(this);
-				Board.board[posX][posY].setFigure(null);
+			} else if (posX > 0 && board[posX - 1][posY].getImage() == null) {
+				Board.board[posX - 1][posY] = this;
+				Board.board[posX][posY] = new Figure(-1, -1);
 				posX--;
 				Puzzle.getBoard().remover();
 				CheckAnswer();
 
-			} else if (posY > 0 && board[posX][posY - 1].getFigure() == null) {
-				Board.board[posX][posY - 1].setFigure(this);
-				Board.board[posX][posY].setFigure(null);
+			} else if (posY > 0 && board[posX][posY - 1].getImage() == null) {
+				Board.board[posX][posY - 1] = this;
+				Board.board[posX][posY] = new Figure(-1, -1);
 				posY--;
 				Puzzle.getBoard().remover();
 				CheckAnswer();
@@ -127,8 +130,8 @@ public class Figure extends JButton implements ActionListener {
 		for(int i = 0; i<dimension; i++){
 			for(int j = 0; j<dimension; j++){
 				
-				figure = Board.board[i][j].getFigure();
-				if(figure == null)
+				figure = Board.board[i][j];
+				if(figure.getImage() == null)
 					continue;
 				
 				if(figure.getPosX() != figure.getSolutionPosX() || figure.getPosY() != figure.getSolutionPosY() || figure.getDegrees() != 0){

@@ -11,8 +11,12 @@ import javax.swing.*;
 
 public class StartPuzzle extends JFrame implements ActionListener{
 	private JButton open;
-	private int dimension = 2;
+	private int dimension = 3;
 	private BufferedImage image = null;
+
+	public int getDimension() {return dimension;}
+
+	public BufferedImage getImage() {return image;}
 
 	public StartPuzzle(){
 		setTitle("New puzzle");
