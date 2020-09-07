@@ -32,12 +32,12 @@ public class Puzzle extends JFrame {
         this.setLocationRelativeTo(null);
         this.setMinimumSize(new Dimension(width, height));
         this.setMaximumSize(new Dimension(width, height));
-        this.setResizable(false);
         container = this.getContentPane();
 
 
         BufferedImage retryIcon = ImageLoader.loadImage("images\\retryIcon.png");
         BufferedImage newGameIcon = ImageLoader.loadImage("images\\newIcon.png");
+        BufferedImage keyIcon = ImageLoader.loadImage("images\\key.png");
 
 
         JButton retryButton =
@@ -50,7 +50,8 @@ public class Puzzle extends JFrame {
         newGameButton.setName("new");
         newGameButton.addActionListener(new IconTimerLitener());
 
-        JButton solveButton = new JButton(new ImageIcon(retryIcon.getScaledInstance(iconSize, iconSize, Image.SCALE_DEFAULT)));
+        JButton solveButton =
+            new JButton(new ImageIcon(keyIcon.getScaledInstance(iconSize, iconSize, Image.SCALE_DEFAULT)));
         solveButton.setName("solve");
         solveButton.addActionListener(new IconTimerLitener());
 
@@ -90,8 +91,9 @@ public class Puzzle extends JFrame {
                 } else if (button.getName().equals("new")) {
 
                     sp = new StartPuzzle();
-                } else if (button.getName().equals("solve")) {
-                   BufferedImage b =  Solution.solve(Board.getPuzzleForSol(sp.getDimension(), ImageResizer.resizeImage(sp.getImage(), 400, 400)));
+                } else if (button.getName().equals("solve") && sp != null) {
+                    BufferedImage b = Solution.solve(
+                        Board.getPuzzleForSol(sp.getDimension(), ImageResizer.resizeImage(sp.getImage(), 400, 400)));
                     if (board != null) {
                         container.remove(board);
                     }
@@ -103,18 +105,15 @@ public class Puzzle extends JFrame {
                     container.validate();
 
                 }
-
             }
         }
-
-
-}
+    }
 
     public static void start(BufferedImage img, int dimension, BufferedImage mini) {
         miniImage.setIcon(new ImageIcon(mini));
-		if (board != null) {
-			container.remove(board);
-		}
+        if (board != null) {
+            container.remove(board);
+        }
         board = new Board(dimension, img);
         container.remove(puzzleArea);
         container.add(board, BorderLayout.WEST);

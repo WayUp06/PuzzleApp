@@ -43,8 +43,6 @@ public class Figure extends JButton implements ActionListener {
 					BufferedImage bf = ImageResizer.rotate((BufferedImage) getImage().getImage(), degrees);
 					Board.board[posX][posY].setIcon(new ImageIcon(bf));
 					Puzzle.getBoard().remover();
-					//long l = Solution.check((BufferedImage) getImage().getImage(),
-					//	(BufferedImage) Board.board[posX + 1][posY].getImage().getImage());
 
 					CheckAnswer();
 				}

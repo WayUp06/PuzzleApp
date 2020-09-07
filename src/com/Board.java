@@ -28,19 +28,14 @@ public class Board extends JPanel{
 			for(int j=0; j<dimension; j++){
 				compBoard[i*dimension + j] = puzzle.getSubimage(x, y, figWidth, figHeight);
 				x += figWidth;
-				System.out.println("Subimage !!!!!!!!!!!!!!!!!!!!!");
 			}
 			x = 0;
 			y += figHeight;
 		}
-		System.out.println("Made puzzle for solving ");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
 		for (BufferedImage b : compBoard) {
 			System.out.println(b);
 		}
-
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
 
 		Random rnd = new Random();
 		for (int i = compBoard.length - 1; i > 0; i--)
@@ -54,7 +49,6 @@ public class Board extends JPanel{
 		for (BufferedImage b : compBoard) {
 			System.out.println(b);
 		}
-
 
 		return compBoard;
 
