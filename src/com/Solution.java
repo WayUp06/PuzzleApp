@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 public class Solution {
 
-    public static long checkWithoutRotationHorizontally(BufferedImage img1, BufferedImage img2, boolean vertically) {//сунемо по у, тобто зліва-справа шукаємо, тут в парам ще вертікалу
+    public static long checkWithoutRotation(BufferedImage img1, BufferedImage img2, boolean vertically) {
         int width1 = img1.getWidth();
         int height1 = img1.getHeight();
         int edgeLength = vertically? width1: height1;
@@ -48,6 +48,17 @@ public class Solution {
             double blueB =
                 (((second[i - 1]) & 0xff) * 0.2) + (((second[i + 1]) & 0xff) * 0.2) + (((second[i]) & 0xff) * 0.6);
 
+        /*for (int i = 0; i < edgeLength; i++){
+
+            int redA = (first[i] >> 16) & 0xff;
+            int greenA = (first[i] >> 8) & 0xff;
+            int blueA = (first[i]) & 0xff;
+            int redB = (second[i] >> 16) & 0xff;
+            int greenB = (second[i] >> 8) & 0xff;
+            int blueB = (second[i]) & 0xff;*/
+
+            // here
+
             difference += Math.abs(redA - redB);
             difference += Math.abs(greenA - greenB);
             difference += Math.abs(blueA - blueB);
@@ -78,19 +89,18 @@ public class Solution {
                 index = 0;
                 while (iterator.hasNext()) {
                     image2 = iterator.next();
-                    if (checkWithoutRotationHorizontally(image1, image2, false) < min) {
-                        min = checkWithoutRotationHorizontally(image1, image2, false);
+                    if (checkWithoutRotation(image1, image2, false) < min) {
+                        min = checkWithoutRotation(image1, image2, false);
                         index = list.indexOf(image2);
                         position = 0;
                     }
-                    if (checkWithoutRotationHorizontally(image2, image1, false) < min) {
-                        min = checkWithoutRotationHorizontally(image2, image1, false);
+                    if (checkWithoutRotation(image2, image1, false) < min) {
+                        min = checkWithoutRotation(image2, image1, false);
                         index = list.indexOf(image2);
                         position = 1;
                     }
 
                 }
-                //image2 = list.get(index);
                 image2 = list.remove(index);
                 if (position == 0) {
                     result = ImageResizer.joinBufferedImageHorizontally(image1, image2, false);
@@ -114,13 +124,13 @@ public class Solution {
 
             while (iterator.hasNext()) {
                 image2 = iterator.next();
-                if (checkWithoutRotationHorizontally(image1, image2, true) < min) {
-                    min = checkWithoutRotationHorizontally(image1, image2, true);
+                if (checkWithoutRotation(image1, image2, true) < min) {
+                    min = checkWithoutRotation(image1, image2, true);
                     index = rowList.indexOf(image2);
                     position = 0;
                 }
-                if (checkWithoutRotationHorizontally(image2, image1, true) < min) {
-                    min = checkWithoutRotationHorizontally(image2, image1, true);
+                if (checkWithoutRotation(image2, image1, true) < min) {
+                    min = checkWithoutRotation(image2, image1, true);
                     index = rowList.indexOf(image2);
                     position = 1;
                 }

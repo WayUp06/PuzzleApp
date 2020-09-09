@@ -1,5 +1,7 @@
 package com;
 
+import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,13 +16,16 @@ public class Puzzle extends JFrame {
     private static BufferedImage def = ImageLoader.loadImage("images\\question_1.jpg");
 
 
-    private final int width = 670;
-    private final int height = 485;
+    //private final int width = 670;
+    //private final int height = 485;
+
+    private final int width = 1150;
+    private final int height = 780;
     private final int iconSize = 30;
     private final int fontSize = 35;
     private final int delay = 1000;
 
-    private static JButton miniImage = new JButton(new ImageIcon(def.getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
+    private static JButton miniImage = new JButton(new ImageIcon(def.getScaledInstance(400, 400, Image.SCALE_DEFAULT)));
     private static Board board = null;
     private static Container container;
 
@@ -43,24 +48,25 @@ public class Puzzle extends JFrame {
         JButton retryButton =
             new JButton(new ImageIcon(retryIcon.getScaledInstance(iconSize, iconSize, Image.SCALE_DEFAULT)));
         retryButton.setName("retry");
-        retryButton.addActionListener(new IconTimerLitener());
+        retryButton.addActionListener(new IconTimerListener());
 
         JButton newGameButton =
             new JButton(new ImageIcon(newGameIcon.getScaledInstance(iconSize, iconSize, Image.SCALE_DEFAULT)));
         newGameButton.setName("new");
-        newGameButton.addActionListener(new IconTimerLitener());
+        newGameButton.addActionListener(new IconTimerListener());
 
         JButton solveButton =
             new JButton(new ImageIcon(keyIcon.getScaledInstance(iconSize, iconSize, Image.SCALE_DEFAULT)));
         solveButton.setName("solve");
-        solveButton.addActionListener(new IconTimerLitener());
+        solveButton.addActionListener(new IconTimerListener());
 
         miniImage.setName("new");
-        miniImage.addActionListener(new IconTimerLitener());
+        miniImage.addActionListener(new IconTimerListener());
 
         puzzleArea = new JPanel();
         puzzleArea.setOpaque(true);
-        puzzleArea.setBackground(Color.BLACK);
+        puzzleArea.setSize(700, 700);
+        puzzleArea.setBackground(Color.WHITE);
 
 
         JToolBar toolbar = new JToolBar();
@@ -68,16 +74,14 @@ public class Puzzle extends JFrame {
         toolbar.add(retryButton);
         toolbar.add(solveButton);
 
-
-        puzzleArea.add(new JLabel(new ImageIcon(def)));
-
+        puzzleArea.add(new JLabel(new ImageIcon(def.getScaledInstance(700, 700, Image.SCALE_DEFAULT))));
 
         container.add(toolbar, BorderLayout.NORTH);
-        container.add(puzzleArea, BorderLayout.WEST);
+        container.add(puzzleArea);
         container.add(miniImage, BorderLayout.EAST);
     }
 
-    class IconTimerLitener implements ActionListener {
+    class IconTimerListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -93,13 +97,16 @@ public class Puzzle extends JFrame {
                     sp = new StartPuzzle();
                 } else if (button.getName().equals("solve") && sp != null) {
                     BufferedImage b = Solution.solve(
-                        Board.getPuzzleForSol(sp.getDimension(), ImageResizer.resizeImage(sp.getImage(), 400, 400)));
+                        //Board.getPuzzleForSol(sp.getDimension(), ImageResizer.resizeImage(sp.getImage(), 700, 700)));
+
+                        Board.getPuzzleForSol(sp.getDimension(), ImageResizer.betterResize(sp.getImage(), 700, 700,VALUE_INTERPOLATION_BICUBIC, true)));
+
                     if (board != null) {
                         container.remove(board);
                     }
                     container.remove(puzzleArea);
                     puzzleArea = new JPanel();
-                    puzzleArea.setPreferredSize(new Dimension(410, 410));
+                    puzzleArea.setPreferredSize(new Dimension(700, 700));
                     puzzleArea.add(new JLabel(new ImageIcon(b)));
                     container.add(puzzleArea, BorderLayout.WEST);
                     container.validate();

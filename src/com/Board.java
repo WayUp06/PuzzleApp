@@ -55,7 +55,7 @@ public class Board extends JPanel{
 	}
 
 	public Board(int dimension, BufferedImage puzzle){
-		this.setPreferredSize(new Dimension(410, 0));
+		this.setPreferredSize(new Dimension(710, 710));
 		this.setBackground(Color.BLACK);
 		this.dimension = dimension;
 		board = new Figure[dimension][dimension];
