@@ -19,7 +19,7 @@ public class Board extends JPanel{
 	public static BufferedImage[] getPuzzleForSol(int dimension, BufferedImage puzzle){
 		int x = 0;
 		int y = 0;
-		int figWidth = puzzle.getWidth()/dimension;
+		int figWidth = puzzle.getWidth()/dimension;//тут добавити так щоб різало норм скіпаючи частину щоб ширина виходила цілим числом
 		int figHeight = puzzle.getHeight()/dimension;
 		int count = dimension*dimension;
 		BufferedImage [] compBoard = new BufferedImage[count];
@@ -33,9 +33,9 @@ public class Board extends JPanel{
 			y += figHeight;
 		}
 
-		for (BufferedImage b : compBoard) {
+		/*for (BufferedImage b : compBoard) {
 			System.out.println(b);
-		}
+		}*/
 
 		Random rnd = new Random();
 		for (int i = compBoard.length - 1; i > 0; i--)
@@ -46,9 +46,9 @@ public class Board extends JPanel{
 			compBoard[i] = a;
 		}
 
-		for (BufferedImage b : compBoard) {
+		/*for (BufferedImage b : compBoard) {
 			System.out.println(b);
-		}
+		}*/
 
 		return compBoard;
 

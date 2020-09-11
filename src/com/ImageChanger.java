@@ -22,17 +22,12 @@ public class ImageResizer {
                                              boolean higherQuality){
            int type = (img.getTransparency() == Transparency.OPAQUE) ?
                BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
-           BufferedImage ret = (BufferedImage)img;
+           BufferedImage ret = img;
            int w, h;
            if (higherQuality) {
-                  // Use multi-step technique: start with original size, then
-                  // scale down in multiple passes with drawImage()
-                  // until the target size is reached
                   w = img.getWidth();
                   h = img.getHeight();
            } else {
-                  // Use one-step technique: scale directly from original
-                  // size to target size with a single drawImage() call
                   w = targetWidth;
                   h = targetHeight;
            }
@@ -78,9 +73,11 @@ public class ImageResizer {
            return rotated;
 	}
 
-       public static BufferedImage joinBufferedImageHorizontally(BufferedImage img1, BufferedImage img2, boolean vertically) {
+	   //зліва 1, справа 2
+       //знизу 1, зверху 2
+       public static BufferedImage joinBufferedImage(BufferedImage img1, BufferedImage img2, boolean vertically) {
 
-              int offset  = 0;
+              int offset  = 0; // border between images
               int width, height;
               if (vertically) {
                      width = img1.getWidth();

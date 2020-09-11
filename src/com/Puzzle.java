@@ -1,7 +1,5 @@
 package com;
 
-import static java.awt.RenderingHints.VALUE_INTERPOLATION_BICUBIC;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -96,11 +94,14 @@ public class Puzzle extends JFrame {
 
                     sp = new StartPuzzle();
                 } else if (button.getName().equals("solve") && sp != null) {
-                    BufferedImage b = Solution.solve(
-                        //Board.getPuzzleForSol(sp.getDimension(), ImageResizer.resizeImage(sp.getImage(), 700, 700)));
+                    //BufferedImage b = Solution.solve(
+                        //Board.getPuzzleForSol(sp.getDimension(), sp.getImage()));
 
-                        Board.getPuzzleForSol(sp.getDimension(), ImageResizer.betterResize(sp.getImage(), 700, 700,VALUE_INTERPOLATION_BICUBIC, true)));
+                    BufferedImage b = Solution.solveInNewWay(Board.getPuzzleForSol(sp.getDimension(), sp.getImage()));
 
+
+                    //b = ImageResizer.betterResize(b, 700, 700,VALUE_INTERPOLATION_BICUBIC, true);
+                    b = ImageResizer.resizeImage(b, 700, 700);
                     if (board != null) {
                         container.remove(board);
                     }
