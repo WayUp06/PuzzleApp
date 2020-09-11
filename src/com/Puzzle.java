@@ -94,13 +94,9 @@ public class Puzzle extends JFrame {
 
                     sp = new StartPuzzle();
                 } else if (button.getName().equals("solve") && sp != null) {
-                    //BufferedImage b = Solution.solve(
-                        //Board.getPuzzleForSol(sp.getDimension(), sp.getImage()));
+                    BufferedImage b = Solution.solve(
+                        Board.getPuzzleForSol(sp.getDimension(), sp.getImage()));
 
-                    BufferedImage b = Solution.solveInNewWay(Board.getPuzzleForSol(sp.getDimension(), sp.getImage()));
-
-
-                    //b = ImageResizer.betterResize(b, 700, 700,VALUE_INTERPOLATION_BICUBIC, true);
                     b = ImageChanger.resizeImage(b, 700, 700);
                     if (board != null) {
                         container.remove(board);
