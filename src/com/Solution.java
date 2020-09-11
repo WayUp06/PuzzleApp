@@ -9,8 +9,6 @@ import java.util.LinkedList;
 
 public class Solution {
 
-    //перевірка чи 1 має бути під 2
-    //перевірка чи має бути 1 зліва, 2 справа
     public static long checkWithoutRotation(BufferedImage img1, BufferedImage img2, boolean vertically) {
         int width1 = img1.getWidth();
         int height1 = img1.getHeight();
@@ -106,9 +104,9 @@ public class Solution {
                 }
                 image2 = list.remove(index);
                 if (position == 0) {
-                    result = ImageResizer.joinBufferedImage(image1, image2, false);
+                    result = ImageChanger.joinBufferedImage(image1, image2, false);
                 } else {
-                    result = ImageResizer.joinBufferedImage(image2, image1, false);
+                    result = ImageChanger.joinBufferedImage(image2, image1, false);
                 }
 
                 list.add(0, result);
@@ -143,9 +141,9 @@ public class Solution {
             image2 = rowList.remove(index);
 
             if (position == 0) {
-                result = ImageResizer.joinBufferedImage(image1, image2, true);
+                result = ImageChanger.joinBufferedImage(image1, image2, true);
             } else {
-                result = ImageResizer.joinBufferedImage(image2, image1, true);
+                result = ImageChanger.joinBufferedImage(image2, image1, true);
             }
 
             rowList.add(0, result);
@@ -485,7 +483,7 @@ public class Solution {
         for (int i = upperEdgeIndex; i >= lowerEdgeIndex; i--){
             image = result[i][leftEdgeIndex];
             for (int j = leftEdgeIndex + 1; j <= rightEdgeIndex; j++) {
-                image = ImageResizer.joinBufferedImage(image, result[i][j], false);
+                image = ImageChanger.joinBufferedImage(image, result[i][j], false);
             }
             rowList.add(image);
         }
@@ -493,7 +491,7 @@ public class Solution {
         Iterator<BufferedImage> iterator1 = rowList.iterator();
         image = iterator1.next();
         while (iterator1.hasNext()){
-            image = ImageResizer.joinBufferedImage(iterator1.next(), image, true);
+            image = ImageChanger.joinBufferedImage(iterator1.next(), image, true);
         }
 
         return image;

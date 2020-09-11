@@ -40,7 +40,7 @@ public class Figure extends JButton implements ActionListener {
 			public void mouseClicked(MouseEvent e) {
 				if(SwingUtilities.isRightMouseButton(e)&&isEnabled()) {
 					degrees = (degrees + 90) % 360;
-					BufferedImage bf = ImageResizer.rotate((BufferedImage) getImage().getImage(), degrees);
+					BufferedImage bf = ImageChanger.rotate((BufferedImage) getImage().getImage(), degrees);
 					Board.board[posX][posY].setIcon(new ImageIcon(bf));
 					Puzzle.getBoard().remover();
 

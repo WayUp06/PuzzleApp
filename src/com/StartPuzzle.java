@@ -72,8 +72,8 @@ public class StartPuzzle extends JFrame implements ActionListener {
 			if (image == null) {
 				return;
 			}
-            BufferedImage puzzleImage = ImageResizer.resizeImage(image, 700, 700);
-            BufferedImage miniImage = ImageResizer.resizeImage(image, 400, 400);
+            BufferedImage puzzleImage = ImageChanger.resizeImage(image, 700, 700);
+            BufferedImage miniImage = ImageChanger.resizeImage(image, 400, 400);
 
             Puzzle.start(puzzleImage, dimension, miniImage);
             this.dispose();

@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 
-public class ImageResizer {
+public class ImageChanger {
 	public  static BufferedImage resizeImage(BufferedImage image, int width, int height) {
        int type;
        type = image.getType() == 0? BufferedImage.TYPE_INT_ARGB : image.getType();
@@ -15,7 +15,7 @@ public class ImageResizer {
        return resizedImage;
     }
 
-    public static BufferedImage betterResize(BufferedImage img,
+    public static BufferedImage resizeBetter(BufferedImage img,
                                              int targetWidth,
                                              int targetHeight,
                                              Object hint,

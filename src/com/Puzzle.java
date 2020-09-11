@@ -101,7 +101,7 @@ public class Puzzle extends JFrame {
 
 
                     //b = ImageResizer.betterResize(b, 700, 700,VALUE_INTERPOLATION_BICUBIC, true);
-                    b = ImageResizer.resizeImage(b, 700, 700);
+                    b = ImageChanger.resizeImage(b, 700, 700);
                     if (board != null) {
                         container.remove(board);
                     }

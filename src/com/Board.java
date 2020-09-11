@@ -33,10 +33,6 @@ public class Board extends JPanel{
 			y += figHeight;
 		}
 
-		/*for (BufferedImage b : compBoard) {
-			System.out.println(b);
-		}*/
-
 		Random rnd = new Random();
 		for (int i = compBoard.length - 1; i > 0; i--)
 		{
@@ -45,10 +41,6 @@ public class Board extends JPanel{
 			compBoard[index] = compBoard[i];
 			compBoard[i] = a;
 		}
-
-		/*for (BufferedImage b : compBoard) {
-			System.out.println(b);
-		}*/
 
 		return compBoard;
 
@@ -72,7 +64,6 @@ public class Board extends JPanel{
 					continue;
 				}
 				completeBoard.add( new Figure(i, j, new ImageIcon(puzzle.getSubimage(x, y, figureWidth, figureHeight)), dimension));
-				//completeBoard.add(new Cell(i, j, new Figure(i, j, new ImageIcon(ImageResizer.rotate( puzzle.getSubimage(x, y, figureWidth, figureHeight), 90)), dimension)));
 				x += figureWidth;
 			}
 			x = 0;
@@ -100,7 +91,7 @@ public class Board extends JPanel{
 				Figure figure = completeBoard.get(randomIndex);
 				figure.setPos(i,j);
 				figure.setDegrees(randomDegree);
-				BufferedImage bf = ImageResizer.rotate((BufferedImage) figure.getImage().getImage(), figure.getDegrees());
+				BufferedImage bf = ImageChanger.rotate((BufferedImage) figure.getImage().getImage(), figure.getDegrees());
 				figure.setIcon(new ImageIcon(bf));
 
 				board[i][j] = figure;
